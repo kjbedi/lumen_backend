@@ -5,37 +5,39 @@ const uri = "mongodb://jasraj:hello@lumen-shard-00-00-827t7.mongodb.net:27017,lu
 const client = new MongoClient(uri, { useNewUrlParser: true });
 var app = express();
 
+var product = require("./app/routes/product-routes")
+
+app.use('/product-list', product);
+
 app.get('/', function (req, res) {
     res.send('Hello World');
 })
 
-app.get('/product-list', function (req, res) {
-    client.connect(err => {
-        const collection = client.db("lumen").collection("product").find({}).toArray(function(err, result) {
-            console.log("Product list generated and sent");
-            res.send(JSON.stringify(result));
-        });
+// app.get('/product-list', function (req, res) {
+//     client.connect(err => {
+//         const collection = client.db("lumen").collection("product").find({}).toArray(function(err, result) {
+//             console.log("Product list generated and sent");
+//             res.send(JSON.stringify(result));
+//         });
         
-        // perform actions on the collection object
-        client.close();
-    });
-    
-    
-})
+//         // perform actions on the collection object
+//         client.close();
+//     });
+// })
 
 app.get('/product-detail', function (req, res) {
     res.send('Hello World');
 })
 
-app.get('/report', function (req, res) {
+app.get('/report', (req, res) => {
     res.send('Hello World');
 })
 
-app.post('/report', function (req, res) {
+app.post('/report', (req, res) => {
     res.send('report');
 })
 
-var server = app.listen(8081, function () {
+var server = app.listen(8081, () => {
     var host = server.address().address
     var port = server.address().port
     var msg = `App started at port number: ${port}`; 
