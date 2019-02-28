@@ -7,9 +7,11 @@ var app = express();
 
 var product = require("./app/routes/product-routes")
 var productDetail = require ("./app/routes/product-detail")
+var addProduct = require ("./app/routes/add-product")
 
 app.use('/product-list', product);
 app.use('/product-detail', productDetail);
+app.use('/add-product', addProduct);
 
 app.get('/', function (req, res) {
     res.send('Hello World');
