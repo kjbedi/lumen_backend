@@ -6,26 +6,12 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 var app = express();
 
 var product = require("./app/routes/product-routes")
+var productDetail = require ("./app/routes/product-detail")
 
 app.use('/product-list', product);
+app.use('/product-detail', productDetail);
 
 app.get('/', function (req, res) {
-    res.send('Hello World');
-})
-
-// app.get('/product-list', function (req, res) {
-//     client.connect(err => {
-//         const collection = client.db("lumen").collection("product").find({}).toArray(function(err, result) {
-//             console.log("Product list generated and sent");
-//             res.send(JSON.stringify(result));
-//         });
-        
-//         // perform actions on the collection object
-//         client.close();
-//     });
-// })
-
-app.get('/product-detail', function (req, res) {
     res.send('Hello World');
 })
 
