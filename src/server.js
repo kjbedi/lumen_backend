@@ -1,28 +1,21 @@
 var express = require('express');
-const MongoClient = require('mongodb').MongoClient;
+var swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
 
-const uri = "mongodb://jasraj:hello@lumen-shard-00-00-827t7.mongodb.net:27017,lumen-shard-00-01-827t7.mongodb.net:27017,lumen-shard-00-02-827t7.mongodb.net:27017/test?ssl=true&replicaSet=Lumen-shard-0&authSource=admin&retryWrites=true";
-const client = new MongoClient(uri, { useNewUrlParser: true });
 var app = express();
 
 var product = require("./app/routes/product-routes")
 var productDetail = require ("./app/routes/product-detail")
 var addProduct = require ("./app/routes/add-product")
 
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/product-list', product);
 app.use('/product-detail', productDetail);
 app.use('/add-product', addProduct);
 
 app.get('/', function (req, res) {
     res.send('Hello World');
-})
-
-app.get('/report', (req, res) => {
-    res.send('Hello World');
-})
-
-app.post('/report', (req, res) => {
-    res.send('report');
 })
 
 var server = app.listen(8081, () => {
